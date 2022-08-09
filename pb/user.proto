@@ -1,0 +1,89 @@
+syntax = "proto3";
+// 通常是应用+server名
+package app.server;
+option go_package="../pb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// 添加用户
+message AddUserRequest {
+  // 部门
+  int32 deptId = 1;
+  // 用户名
+  string username = 2;
+  // 姓名
+  string name = 3;
+  // 手机号
+  string mobile = 4 ;
+}
+
+// 添加用户
+message AddUserResponse {
+  int32 userId = 1;
+}
+// 修改手机号
+message ModifyMobileRequest {
+  // 用户id
+  int32 userId = 1 ;
+  // 手机号
+  string mobile = 2 ;
+  // 验证码
+  string verifyCode = 3 ;
+}
+
+// 通过用户ID 查询
+message QryUserByIdRequest {
+  int32 useId = 1 ;
+}
+
+// 分页查询
+message QryUserPageRequest {
+  // 页码
+  int32 page = 1 ;
+  // 每页条数
+  int32 pageSize = 2;
+  // 排序字段
+  string sortField = 3;
+  // 排序顺序
+  string sortOrder = 4 ;
+  // 登录名
+  string username = 5;
+  // 姓名
+  string name = 6;
+  // 手机
+  string mobile = 7;
+}
+
+// 分页查询响应
+message QryUserPageResponse {
+  // 总数
+  int64 total = 1;
+  repeated UserResponse data = 2;
+}
+
+// 用户信息
+message UserResponse {
+  // 用户id
+  int32 id = 1;
+  // 部门id
+  int32 deptId = 2;
+  // 用户名
+  string username = 3;
+  // 姓名
+  string name = 4;
+  // 手机号
+  string mobile = 5 ;
+  // 状态
+  int32 status = 6;
+  // 创建时间
+  google.protobuf.Timestamp createTime = 7;
+}
+
+
+service UserService {
+  rpc addUser (AddUserRequest) returns (AddUserResponse);
+  rpc modifyUserMobile (ModifyMobileRequest) returns (google.protobuf.Empty);
+  rpc qryUserById (QryUserByIdRequest) returns (UserResponse);
+  rpc qryUserPage (QryUserPageRequest) returns (QryUserPageResponse);
+}
