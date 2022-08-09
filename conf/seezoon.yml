@@ -1,0 +1,19 @@
+# 支持环境变量如GRPC_LISTEN=:5001
+grpc:
+  network: tcp
+  listen: :5001
+log:
+  filename: logs/seezoon.log
+  maxSize: 1024
+  maxAge: 10
+  level: debug
+  # 生产关闭
+  reportCaller: true
+  # 生产关闭
+  outputToConsole: true
+db:
+  dsn: root:@tcp(127.0.0.1:3306)/seezoon?charset=utf8mb4&parseTime=True&loc=Local&timeout=1s
+  maxIdleConns: 1
+  connMaxLifetime: 3600
+  connMaxIdleTime: 600
+  maxOpenConns: 10
